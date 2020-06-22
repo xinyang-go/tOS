@@ -1,0 +1,12 @@
+[submodule "3rd_party/pipes"]
+	path = 3rd_party/pipes
+	url = https://github.com/joboccara/pipes.git
+[submodule "3rd_party/CLI11"]
+	path = 3rd_party/CLI11
+	url = https://github.com/CLIUtils/CLI11.git
+[submodule "3rd_party/tabulate"]
+	path = 3rd_party/tabulate
+	url = https://github.com/p-ranav/tabulate.git
+[submodule "3rd_party/fmt"]
+	path = 3rd_party/fmt
+	url = https://github.com/fmtlib/fmt.git
