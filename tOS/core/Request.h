@@ -159,6 +159,8 @@ namespace tOS {
 
         Client &operator=(Client &&p) = default;
 
+        operator bool() { return r; }
+
         inline std::future<BackType> push(const SendType &obj) {
             return r->push(obj);
         }
@@ -213,6 +215,8 @@ namespace tOS {
         Server &operator=(const Server &p) = delete;
 
         Server &operator=(Server &&p) = default;
+
+        operator bool() { return r; }
 
         inline bool pop(T &obj) {
             return r->pop(obj);

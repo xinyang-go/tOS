@@ -273,6 +273,8 @@ namespace tOS {
 
         Publisher &operator=(Publisher &&p) = default;
 
+        operator bool() { return m; }
+
         inline void push(const ValType &obj) {
             m->push(iter, obj);
         }
@@ -326,6 +328,8 @@ namespace tOS {
         Subscriber &operator=(const Subscriber &p) = delete;
 
         Subscriber &operator=(Subscriber &&p) = default;
+
+        operator bool() { return m; }
 
         template<typename _Rep, typename _Period>
         inline MessageStatus pop(ValType &obj, const std::chrono::duration<_Rep, _Period> &dt) {
