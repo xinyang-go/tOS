@@ -80,28 +80,29 @@ int list(int argc, const char *argv[]) {
 CMD_EXPORT(list);
 
 int exec(int argc, const char *argv[]) {
-    std::string entry;
     std::vector<std::string> v_argv;
-    CLI::App app("exec");
-    app.add_option("entry", entry, "the entry to run.")->required();
-    app.add_option("argv", v_argv, "the argv pass to entry.");
-    CLI11_PARSE(app, argc, argv);
-
-    auto iter = entry_map.find(entry);
+    if (argc <= 1) {
+        std::cerr << "usage: exec <node> [args...]" << std::endl;
+        return -1;
+    }
+    for (int i = 1; i < argc; i++) {
+        v_argv.emplace_back(argv[i]);
+    }
+    auto iter = entry_map.find(v_argv[0]);
     if (iter == entry_map.end()) {
-        std::cerr << "entry '" << entry << "' not found." << std::endl;
+        std::cerr << "entry '" << v_argv[0] << "' not found." << std::endl;
         return -1;
     }
 
-    std::thread([func = iter->second](std::string entry_, std::vector<std::string> v_argv_) {
+    std::thread([func = iter->second](std::vector<std::string> v_argv_) {
         int argc_ = v_argv_.size() > TOS_MAX_TOKEN ? TOS_MAX_TOKEN : v_argv_.size();
         const char *argv_[TOS_MAX_TOKEN];
         for (int i = 0; i < argc_; i++) {
             argv_[i] = v_argv_[i].c_str();
         }
-        auto node = Node::create_node(entry_);
+        auto node = Node::create_node(v_argv_[0]);
         func(argc_, argv_);
-    }, std::move(entry), std::move(v_argv)).detach();
+    }, std::move(v_argv)).detach();
 
     return 0;
 }
