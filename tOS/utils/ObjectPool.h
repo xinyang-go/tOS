@@ -57,7 +57,7 @@ namespace tOS {
 
         // 分配一个共享对象，必须保证该对象池的生命周期大于共享对象。
         inline std::shared_ptr<T> alloc_shared() {
-            return std::shared_ptr<T>(alloc(), [this](T *ptr) { free(ptr); });
+            return std::shared_ptr<T>((std::remove_all_extents_t<T> *) alloc(), [this](void *ptr) { free((T *) ptr); });
         }
     };
 }
