@@ -77,7 +77,7 @@ int client(int argc, const char *argv[]) {
     c_time_t ts{}, tm{}, te{};
     while (node->running) {
         ts = std::chrono::high_resolution_clock::now();
-        auto f = c.push(ts);
+        auto f = c.emplace(ts);
         try {
             tm = f.get();
         } catch (std::future_error &e) {

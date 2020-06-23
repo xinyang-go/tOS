@@ -99,7 +99,7 @@ namespace tOS {
             std::promise<B> promise;
             auto future = promise.get_future();
             if (c.full()) c.pop();
-            c.emplace({std::forward<Ts>(args)...}, std::move(promise));
+            c.emplace(S(std::forward<Ts>(args)...), std::move(promise));
             cv.notify_all();
             return std::move(future);
         }
@@ -170,7 +170,7 @@ namespace tOS {
         }
 
         template<class ...Ts>
-        inline std::future<BackType> &&emplace(Ts &&...args) {
+        inline std::future<BackType> emplace(Ts &&...args) {
             return r->emplace(std::forward<Ts>(args)...);
         }
 
