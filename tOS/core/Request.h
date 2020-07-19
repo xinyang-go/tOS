@@ -99,7 +99,7 @@ namespace tOS {
             std::promise<B> promise;
             auto future = promise.get_future();
             if (c.full()) c.pop();
-            c.emplace(S(std::forward<Ts>(args)...), std::move(promise));
+            c.emplace(S{std::forward<Ts>(args)...}, std::move(promise));
             cv.notify_all();
             return std::move(future);
         }

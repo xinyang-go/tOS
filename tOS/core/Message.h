@@ -103,7 +103,7 @@ namespace tOS {
         void emplace(const p_iter &iter, Ts &&...args) {
             std::unique_lock lock(mtx);
             if (c.full()) c.pop();
-            c.push(T(std::forward<Ts>(args)...));
+            c.emplace(std::forward<Ts>(args)...);
             cv.notify_one();
         }
 
@@ -214,7 +214,7 @@ namespace tOS {
             std::unique_lock lock(mtx);
             for (auto &c: cs) {
                 if (c.full()) c.pop();
-                c.push(T(std::forward<Ts>(args)...));
+                c.emplace(std::forward<Ts>(args)...);
             }
             cv.notify_all();
         }

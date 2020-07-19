@@ -43,7 +43,7 @@ namespace tOS {
         template<class ...Ts>
         inline void emplace(Ts &&... args) {
             if constexpr(CHECK) if (full()) throw std::range_error("queue full!");
-            buffer[top++] = T(std::forward<Ts>(args)...);
+            buffer[top++] = T{std::forward<Ts>(args)...};
         }
 
         inline T pop() {

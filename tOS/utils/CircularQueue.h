@@ -89,7 +89,7 @@ namespace tOS {
         template<class ...Ts>
         inline void emplace(Ts &&... args) {
             if constexpr (CHECK) if (full()) throw std::range_error("queue full!");
-            buffer[static_cast<std::size_t>(tail++)] = T(std::forward<Ts>(args)...);
+            buffer[static_cast<std::size_t>(tail++)] = T{std::forward<Ts>(args)...};
         }
 
         inline T pop() {
