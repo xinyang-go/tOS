@@ -14,6 +14,7 @@ void signal_stacktrace(int signum) {
     boost::stacktrace::safe_dump_to("stacktrace.dump");
     std::cout << "stacktrace:" << std::endl;
     std::cout << boost::stacktrace::stacktrace();
+    exit(signum);
 }
 
 void register_signal_stacktrace() {
