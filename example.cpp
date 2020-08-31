@@ -93,6 +93,52 @@ int client(int argc, const char *argv[]) {
 
 ENTRY_EXPORT(client);
 
+int sync_waiter(int argc, const char *argv[]) {
+    auto node = Node::this_node();
+    auto logger = node->make_logger();
+
+    auto sync = node->make_sync<OpenMode::FIND_OR_CREATE, char>("sync");
+    if (!sync) {
+        logger->log_e() << "sync create fail!" << std::endl;
+    }
+
+    while (node->running) {
+        sync->wait('e');
+        logger->log_i() << "current mode: 'e'" << std::endl;
+        std::this_thread::sleep_for(0.5s);
+    }
+
+    return 0;
+}
+
+ENTRY_EXPORT(sync_waiter);
+
+int sync_setter(int argc, const char *argv[]) {
+    auto node = Node::this_node();
+    auto logger = node->make_logger();
+
+    auto sync = node->make_sync<OpenMode::FIND_OR_CREATE, char>("sync");
+    if (!sync) {
+        logger->log_e() << "sync create fail!" << std::endl;
+    }
+
+    int cnt = 0;
+    while (node->running) {
+        if (++cnt % 3 == 0) {
+            logger->log_i() << "set mode to 'e'." << std::endl;
+            sync->update('e');
+        } else {
+            logger->log_i() << "set mode to 'a'." << std::endl;
+            sync->update('a');
+        }
+        std::this_thread::sleep_for(1s);
+    }
+
+    return 0;
+}
+
+ENTRY_EXPORT(sync_setter);
+
 int my_stacktrace_test(int argc, const char *argv[]) {
     throw std::runtime_error("test stacktrace.");
     return 0;

@@ -23,7 +23,7 @@ namespace tOS {
     };
 
     enum class ObjType {
-        MESSAGE = 0, REQUEST, NODE, LOGGER, USR_OBJ, TYPE_NUM
+        MESSAGE = 0, REQUEST, NODE, LOGGER, SYNC, USR_OBJ, TYPE_NUM
     };
 
     const std::unordered_map<ObjType, std::string> obj_type_name = {
@@ -31,6 +31,7 @@ namespace tOS {
             {ObjType::REQUEST, "REQUEST"},
             {ObjType::NODE,    "NODE"},
             {ObjType::LOGGER,  "LOGGER"},
+            {ObjType::SYNC,    "SYNC"},
             {ObjType::USR_OBJ, "USR_OBJ"}
     };
 

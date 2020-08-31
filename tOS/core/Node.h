@@ -6,6 +6,7 @@
 #define TOS_NODE_H
 
 #include <fmt/format.h>
+#include "Sync.h"
 #include "Message.h"
 #include "Request.h"
 #include "Logger.h"
@@ -57,6 +58,11 @@ namespace tOS {
         auto make_server(const std::string &request_name) const {
             return Server{SharedObj<Request<S, B, SIZE, Container>>::template make<MODE>(
                     ObjType::REQUEST, request_name)};
+        }
+
+        template<OpenMode MODE, class T>
+        auto make_sync(const std::string &sync_name) const {
+            return SharedObj<Sync<T>>::template make<MODE>(ObjType::SYNC, sync_name);
         }
 
         template<OpenMode MODE, class T, class ...Ts>

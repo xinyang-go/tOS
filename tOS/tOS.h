@@ -13,6 +13,7 @@
 #include "core/Message.h"
 #include "core/Request.h"
 #include "core/Container.h"
+#include "core/Sync.h"
 
 #include "utils/BitMap.h"
 #include "utils/ObjectPool.h"
