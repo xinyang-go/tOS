@@ -60,9 +60,9 @@ namespace tOS {
                     ObjType::REQUEST, request_name)};
         }
 
-        template<OpenMode MODE, class T>
-        auto make_sync(const std::string &sync_name) const {
-            return SharedObj<Sync<T>>::template make<MODE>(ObjType::SYNC, sync_name);
+        template<OpenMode MODE, class T, class ...Ts>
+        auto make_sync(const std::string &sync_name, Ts &&...args) const {
+            return SharedObj<Sync<T>>::template make<MODE>(ObjType::SYNC, sync_name, std::forward<Ts>(args)...);
         }
 
         template<OpenMode MODE, class T, class ...Ts>

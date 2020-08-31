@@ -17,11 +17,14 @@ namespace tOS {
      */
     template<class T>
     class Sync {
-        T val{};
+        T val;
         std::mutex mtx;
         std::condition_variable cv;
 
     public:
+        template<class ...Ts>
+        explicit Sync(Ts &&... objs) : val(std::forward<Ts>(objs)...) {}
+
         void update(const T &v) {
             std::unique_lock lock(mtx);
             if (v != val) {
